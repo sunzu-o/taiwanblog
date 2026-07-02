@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* ── Okinawa カラーシステム ── */
+:root {
+  --emerald:       #00A896;
+  --emerald-dark:  #00796B;
+  --emerald-deep:  #004D40;
+  --emerald-light: #64D8CB;
+  --emerald-pale:  #E0F7F4;
+  --teal:          #0097A7;
+  --coral:         #E8714A;
+  --coral-light:   #F4956F;
+  --gold:          #D4A843;
+  --sand:          #FBF7EF;
+  --ink:           #0D1B2A;
+  --text:          #1A2535;
+  --text-muted:    #5C6E7E;
+  --surface:       #F6FAFB;
+  --border:        #D8E8EC;
+}
+
+body {
+  color: var(--text);
+  background: #FFFFFF;
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── 記事本文 ── */
+.prose-okinawa h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--emerald-dark);
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--emerald-light);
+}
+.prose-okinawa h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+.prose-okinawa p {
+  line-height: 2;
+  margin-bottom: 1.4rem;
+  color: #3A4B5C;
+}
+.prose-okinawa ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.prose-okinawa ul li {
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+  color: #3A4B5C;
+}
+.prose-okinawa strong {
+  color: var(--emerald-dark);
+  font-weight: 700;
+}
+.prose-okinawa a {
+  color: var(--emerald);
+  text-decoration: underline;
+}
+.prose-okinawa table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.75rem;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+.prose-okinawa th {
+  background: var(--emerald-dark) !important;
+  color: #fff !important;
+  font-weight: 600;
+  padding: 0.75rem 1.2rem;
+  text-align: left;
+}
+.prose-okinawa td {
+  padding: 0.65rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  color: #3A4B5C;
+}
+.prose-okinawa tr:nth-child(even) td { background: var(--emerald-pale); }
+.prose-okinawa tr:last-child td { border-bottom: none; }
+
+/* ── グローバルユーティリティ ── */
+.section-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--emerald);
+}
+.section-heading {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.section-heading em {
+  font-style: normal;
+  color: var(--emerald);
+}
+
+/* カードホバー */
+.card-lift {
+  transition: transform 0.28s cubic-bezier(.4,0,.2,1), box-shadow 0.28s cubic-bezier(.4,0,.2,1);
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(0,120,110,0.14), 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* カテゴリグリッドのスケールホバー */
+.cat-card-img {
+  transition: transform 0.6s cubic-bezier(.4,0,.2,1);
+}
+.cat-card:hover .cat-card-img { transform: scale(1.07); }
+.cat-card:hover .cat-card-arrow { opacity: 1; transform: translateX(0); }
+.cat-card-arrow {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* グラデーションプレースホルダー */
+.img-ocean   { background: linear-gradient(145deg,#0077B6 0%,#00A896 60%,#64D8CB 100%); }
+.img-food    { background: linear-gradient(145deg,#C84B31 0%,#E8714A 55%,#F4A261 100%); }
+.img-nature  { background: linear-gradient(145deg,#1B5E20 0%,#2E7D32 50%,#43A047 100%); }
+.img-night   { background: linear-gradient(145deg,#1A237E 0%,#283593 55%,#3F51B5 100%); }
+.img-sunset  { background: linear-gradient(145deg,#BF360C 0%,#E64A19 50%,#FF7043 100%); }
+.img-city    { background: linear-gradient(145deg,#006064 0%,#00838F 55%,#00ACC1 100%); }
