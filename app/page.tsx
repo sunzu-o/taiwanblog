@@ -6,6 +6,8 @@ import {
   IconCamera, IconCutlery, IconBus, IconShoppingBag, IconHotel, IconInfo, IconArrow,
 } from "@/components/Icon";
 import PackingSimulator from "@/components/PackingSimulator";
+import OkinawaMap from "@/components/OkinawaMap";
+import PostSearch from "@/components/PostSearch";
 
 const announcements = [
   "🌺 沖繩花季：寒緋櫻1月底綻放，比本州早兩個月",
@@ -54,22 +56,15 @@ const bentoItems = [
   },
 ];
 
-const areas = [
-  { emoji: "🏙️", name: "那霸・南部",  desc: "國際通、首里城、豬肉料理" },
-  { emoji: "🏖️", name: "中部",        desc: "美國村、殘波岬、海洋體驗" },
-  { emoji: "🐋", name: "北部・本部",  desc: "美麗海水族館、今歸仁城跡" },
-  { emoji: "🌴", name: "離島",        desc: "石垣島、宮古島、慶良間"   },
-];
-
 const themes = [
-  { emoji: "🌊", label: "浮潛・潛水" },
-  { emoji: "🏰", label: "歷史古跡"   },
-  { emoji: "🍜", label: "在地美食"   },
-  { emoji: "🛍️", label: "免稅購物"  },
-  { emoji: "🌅", label: "夕陽景點"   },
-  { emoji: "👨‍👩‍👧", label: "親子旅遊" },
-  { emoji: "🚗", label: "租車自駕"   },
-  { emoji: "🐬", label: "海豚體驗"   },
+  { emoji: "🌊", label: "浮潛・潛水", href: "/category/sightseeing" },
+  { emoji: "🏰", label: "歷史古跡",   href: "/category/sightseeing" },
+  { emoji: "🍜", label: "在地美食",   href: "/category/food"        },
+  { emoji: "🛍️", label: "免稅購物",  href: "/category/shopping"    },
+  { emoji: "🌅", label: "夕陽景點",   href: "/category/sightseeing" },
+  { emoji: "👨‍👩‍👧", label: "親子旅遊", href: "/category/sightseeing" },
+  { emoji: "🚗", label: "租車自駕",   href: "/category/transport"   },
+  { emoji: "🐬", label: "海豚體驗",   href: "/category/sightseeing" },
 ];
 
 const guides = [
@@ -266,27 +261,26 @@ export default function HomePage() {
             </div>
           </AnimateOnView>
 
-          {/* エリアカード */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-            {areas.map((area, i) => (
-              <AnimateOnView key={area.name} delay={i * 70} from="bottom">
-                <Link href="/category/sightseeing"
-                  className="block p-5 rounded-2xl text-center transition-all hover:-translate-y-1 hover:shadow-lg"
-                  style={{ border: "1.5px solid #E2EDF0", background: "#FAFFFE" }}>
-                  <div className="text-3xl mb-2">{area.emoji}</div>
-                  <div className="font-bold text-slate-800 text-sm mb-1">{area.name}</div>
-                  <div className="text-xs text-slate-500 leading-relaxed">{area.desc}</div>
-                </Link>
-              </AnimateOnView>
-            ))}
-          </div>
+          {/* 検索窓（キーワード＋カテゴリ絞り込み） */}
+          <AnimateOnView from="bottom">
+            <div className="mb-12">
+              <PostSearch posts={posts} />
+            </div>
+          </AnimateOnView>
+
+          {/* イラスト風クリッカブルマップ */}
+          <AnimateOnView from="bottom">
+            <div className="mb-12">
+              <OkinawaMap />
+            </div>
+          </AnimateOnView>
 
           {/* 体験テーマ */}
           <AnimateOnView from="bottom">
             <h3 className="font-bold text-slate-700 text-sm mb-4">依體驗主題搜尋</h3>
             <div className="flex flex-wrap gap-2.5">
               {themes.map((theme) => (
-                <Link key={theme.label} href="/category/sightseeing"
+                <Link key={theme.label} href={theme.href}
                   className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105"
                   style={{ background: "#F0F9F8", color: "#00796B", border: "1px solid #B2DFDB" }}>
                   <span>{theme.emoji}</span>
