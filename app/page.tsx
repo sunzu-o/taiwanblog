@@ -1,33 +1,95 @@
 import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import AnimateOnView from "@/components/AnimateOnView";
-import {
-  IconPlane, IconWave, IconSun,
-  IconCamera, IconCutlery, IconBus, IconShoppingBag, IconHotel, IconInfo,
-  IconCastle, IconBowl, IconArrow,
-} from "@/components/Icon";
 import Link from "next/link";
+import {
+  IconCamera, IconCutlery, IconBus, IconShoppingBag, IconHotel, IconInfo, IconArrow,
+} from "@/components/Icon";
+import PackingSimulator from "@/components/PackingSimulator";
+
+const announcements = [
+  "🌺 沖繩花季：寒緋櫻1月底綻放，比本州早兩個月",
+  "🚌 機場交通：東京巴士¥240直達國際通，約15分鐘",
+  "🌊 美麗海水族館：國中生以下免費，全年開放",
+  "🛍️ 國際通：持台灣護照享免稅優惠",
+];
 
 const categories = [
-  { slug: "sightseeing", Icon: IconCamera,      label: "景點介紹", desc: "海灘、城跡、自然景觀",  img: "/images/tran-chura.jpg",      imgClass: "img-ocean",  span: true },
-  { slug: "food",        Icon: IconCutlery,     label: "美食推薦", desc: "沖繩拉麵、泡盛、在地料理", img: "/images/cat-food.jpg",        imgClass: "img-food"              },
-  { slug: "transport",   Icon: IconBus,         label: "交通攻略", desc: "單軌、巴士、租車攻略",   img: "/images/cat-transport.jpg",   imgClass: "img-nature"            },
-  { slug: "shopping",    Icon: IconShoppingBag, label: "購物指南", desc: "國際通、免稅、伴手禮",   img: "/images/cat-shopping.jpg",    imgClass: "img-night"             },
-  { slug: "hotel",       Icon: IconHotel,       label: "住宿推薦", desc: "度假村、民宿、商務旅館",  img: "/images/cat-hotel.jpg",       imgClass: "img-sunset"            },
-  { slug: "tips",        Icon: IconInfo,        label: "實用資訊", desc: "禮儀、換錢、SIM卡",      img: "/images/hospital.jpg",        imgClass: "img-city"              },
+  { slug: "sightseeing", Icon: IconCamera,      label: "景點介紹", desc: "海灘、城跡、自然景觀",    img: "/images/tran-chura.jpg"    },
+  { slug: "food",        Icon: IconCutlery,     label: "美食推薦", desc: "沖繩拉麵、泡盛、在地料理", img: "/images/cat-food.jpg"      },
+  { slug: "transport",   Icon: IconBus,         label: "交通攻略", desc: "單軌、巴士、租車攻略",    img: "/images/cat-transport.jpg" },
+  { slug: "shopping",    Icon: IconShoppingBag, label: "購物指南", desc: "國際通、免稅、伴手禮",    img: "/images/cat-shopping.jpg"  },
+  { slug: "hotel",       Icon: IconHotel,       label: "住宿推薦", desc: "度假村、民宿、商務旅館",  img: "/images/cat-hotel.jpg"     },
+  { slug: "tips",        Icon: IconInfo,        label: "實用資訊", desc: "禮儀、換錢、SIM卡",      img: "/images/hospital.jpg"      },
 ];
 
-const highlights = [
-  { Icon: IconPlane, stat: "1.5h",   title: "直飛即達",   desc: "從台北、高雄直達那霸，是台灣人最近的境外南島天堂" },
-  { Icon: IconWave,  stat: "Top 3",  title: "世界級海洋", desc: "珊瑚礁覆蓋率極高，海水透明度名列全球前茅"         },
-  { Icon: IconSun,   stat: "365日",  title: "全年皆宜",   desc: "亞熱帶氣候溫暖宜人，秋冬也是逃離台灣寒流的首選"  },
+const bentoItems = [
+  {
+    id: "sakura", wide: true,
+    style: { background: "linear-gradient(135deg,#FF6B8A 0%,#FFB3C1 100%)" },
+    emoji: "🌸", tag: "季節特輯", title: "沖繩花季攻略",
+    desc: "寒緋櫻1月底綻放，比本州早兩個月！今歸仁城跡是最佳賞櫻地點。",
+    href: "/category/sightseeing",
+  },
+  {
+    id: "ramen", wide: false,
+    style: { background: "linear-gradient(135deg,#E8714A 0%,#F4A261 100%)" },
+    emoji: "🍜", tag: "美食特輯", title: "沖繩拉麵",
+    desc: "豬骨清湯，台灣人一定喜歡！",
+    href: "/category/food",
+  },
+  {
+    id: "souvenir", wide: false,
+    style: { background: "linear-gradient(135deg,#00A896 0%,#64D8CB 100%)" },
+    emoji: "🛍️", tag: "伴手禮", title: "必買調味料",
+    desc: "泡盛、沖繩鹽——帶回台灣的最佳禮物。",
+    href: "/category/shopping",
+  },
+  {
+    id: "snorkel", wide: true,
+    style: { background: "linear-gradient(135deg,#0077B6 0%,#00B4D8 100%)" },
+    emoji: "🌊", tag: "體驗推薦", title: "珊瑚礁浮潛",
+    desc: "沖繩海水透明度名列全球前茅，恩納村是浮潛聖地，初學者也能輕鬆體驗。",
+    href: "/category/sightseeing",
+  },
 ];
 
-const whyOkinawa = [
-  { Icon: IconWave,   text: "清澈見底的珊瑚礁海洋，世界頂級浮潛聖地" },
-  { Icon: IconCastle, text: "琉球王國獨特的歷史文化遺產" },
-  { Icon: IconBowl,   text: "沖繩拉麵、泡盛、海葡萄等珍貴在地美食" },
-  { Icon: IconPlane,  text: "從台灣直飛1.5小時，無需長途跋涉" },
+const areas = [
+  { emoji: "🏙️", name: "那霸・南部",  desc: "國際通、首里城、豬肉料理" },
+  { emoji: "🏖️", name: "中部",        desc: "美國村、殘波岬、海洋體驗" },
+  { emoji: "🐋", name: "北部・本部",  desc: "美麗海水族館、今歸仁城跡" },
+  { emoji: "🌴", name: "離島",        desc: "石垣島、宮古島、慶良間"   },
+];
+
+const themes = [
+  { emoji: "🌊", label: "浮潛・潛水" },
+  { emoji: "🏰", label: "歷史古跡"   },
+  { emoji: "🍜", label: "在地美食"   },
+  { emoji: "🛍️", label: "免稅購物"  },
+  { emoji: "🌅", label: "夕陽景點"   },
+  { emoji: "👨‍👩‍👧", label: "親子旅遊" },
+  { emoji: "🚗", label: "租車自駕"   },
+  { emoji: "🐬", label: "海豚體驗"   },
+];
+
+const guides = [
+  {
+    emoji: "🚗", title: "租車・駕照",
+    items: ["台灣駕照＋國際駕照可直接使用", "建議在台灣出發前辦理國際駕照", "日本靠左行駛，注意方向"],
+  },
+  {
+    emoji: "📞", title: "緊急聯絡",
+    items: ["從台灣撥日本：+81（去掉0）", "沖繩警察：+81-98-863-0110", "中文醫療口譯：0570-050-235"],
+  },
+  {
+    emoji: "💴", title: "換錢・支付",
+    items: ["7-Eleven ATM可用台灣卡", "國際通有多家換錢所", "主要景點接受信用卡"],
+  },
+];
+
+const youtubeVideos = [
+  { title: "沖繩3天2夜完全攻略｜台灣人必看", channel: "妙遊沖繩" },
+  { title: "那霸機場到市區最省錢方法", channel: "妙遊沖繩" },
 ];
 
 export default function HomePage() {
@@ -35,40 +97,59 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ═══════════════════════ HERO ═══════════════════════ */}
-      <section className="relative min-h-screen flex items-end overflow-hidden">
+      {/* ═══ 第1層: ファーストビュー ═══ */}
+      <section className="relative min-h-screen flex flex-col overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/hero.jpg" alt="沖繩的海"
-          className="absolute inset-0 w-full h-full object-cover object-center" />
+        <img src="/images/hero.jpg" alt="沖繩"
+          className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0"
-          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 35%, rgba(5,18,30,0.78) 100%)" }} />
+          style={{ background: "linear-gradient(to bottom,rgba(0,0,0,0.15) 0%,rgba(5,18,30,0.78) 100%)" }} />
 
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pb-20 pt-40">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 mb-6 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase"
-              style={{ background: "rgba(0,168,150,0.22)", color: "#64D8CB", border: "1px solid rgba(100,216,203,0.3)" }}>
-              在地生活日本人親身帶路
+        {/* 告知バナー（マーキー） */}
+        <div className="relative z-10 overflow-hidden py-2.5"
+          style={{ background: "rgba(0,168,150,0.88)", backdropFilter: "blur(4px)" }}>
+          <div className="marquee-track text-white text-xs font-semibold">
+            {[...announcements, ...announcements].map((a, i) => (
+              <span key={i} className="inline-block px-10">{a}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* メインコンテンツ */}
+        <div className="relative z-10 flex-1 flex items-end">
+          <div className="w-full max-w-6xl mx-auto px-6 pb-20 pt-12">
+            {/* 言語バッジ */}
+            <div className="flex flex-wrap items-center gap-2 mb-6">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold"
+                style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)", backdropFilter: "blur(6px)" }}>
+                🌏 繁體中文（台灣）
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
+                style={{ background: "rgba(0,168,150,0.3)", color: "#64D8CB", border: "1px solid rgba(100,216,203,0.4)" }}>
+                在地日本人帶路
+              </span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-5 leading-[1.05] tracking-tight">
+
+            <h1 className="text-5xl md:text-7xl font-black text-white mb-4 leading-[1.05] tracking-tight">
               發現<br />
-              <span style={{ background: "linear-gradient(90deg,#64D8CB 0%,#ADE8F4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              <span style={{ background: "linear-gradient(90deg,#64D8CB,#ADE8F4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 沖繩之美
               </span>
             </h1>
-            <p className="text-base md:text-lg text-white/75 mb-9 leading-relaxed max-w-lg">
-              從景點、美食到交通攻略，由台灣人視角精心整理的完整旅遊指南。
+            <p className="text-white/80 text-base mb-8 max-w-lg leading-relaxed">
+              在地生活日本人親身帶路，提供最真實的沖繩景點、美食、交通完整攻略。
             </p>
-            <div className="flex flex-wrap gap-3">
-              <Link href="/category/sightseeing"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-bold shadow-lg transition-all duration-200 hover:brightness-110"
-                style={{ background: "#00A896", color: "#fff" }}>
-                開始探索 <IconArrow size={15} color="#fff" />
-              </Link>
-              <Link href="/category/transport"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-white/20"
-                style={{ border: "1.5px solid rgba(255,255,255,0.45)", color: "#fff", backdropFilter: "blur(8px)", background: "rgba(255,255,255,0.08)" }}>
-                交通攻略
-              </Link>
+
+            {/* カテゴリショートカット */}
+            <div className="flex flex-wrap gap-2">
+              {categories.map(({ slug, Icon, label }) => (
+                <Link key={slug} href={`/category/${slug}`}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all hover:scale-105"
+                  style={{ background: "rgba(255,255,255,0.12)", color: "#fff", border: "1px solid rgba(255,255,255,0.25)", backdropFilter: "blur(8px)" }}>
+                  <Icon size={14} color="rgba(255,255,255,0.8)" />
+                  {label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -80,175 +161,233 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════ HIGHLIGHTS ═══════════════════════ */}
-      <section className="bg-white pt-16 pb-20">
+      {/* ═══ 第2層: LINE/Facebook 誘導 ═══ */}
+      <section className="bg-white py-14">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {highlights.map(({ Icon, stat, title, desc }, i) => (
-              <AnimateOnView key={title} delay={i * 130} from="bottom">
-                <div className="group flex flex-col gap-5 p-8 rounded-2xl transition-all duration-300 hover:shadow-lg"
-                  style={{ border: "1.5px solid #D8F0ED", background: "#FAFFFE" }}>
-                  <div className="flex items-center gap-4">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: "linear-gradient(135deg,#00A896,#64D8CB)" }}>
-                      <Icon size={20} color="#fff" />
-                    </div>
-                    <span className="text-3xl font-black" style={{ color: "#00A896" }}>{stat}</span>
-                  </div>
+          <AnimateOnView from="bottom">
+            <div className="rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-8"
+              style={{ background: "linear-gradient(135deg,#0D2B3E 0%,#1A4060 100%)" }}>
+              <div className="flex-1">
+                <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "#64D8CB" }}>FOLLOW US</p>
+                <h2 className="text-2xl font-black text-white mb-3">追蹤我們，隨時掌握沖繩最新資訊</h2>
+                <p className="text-white/70 text-sm leading-relaxed">
+                  加入LINE或Facebook，獲取限定旅遊Tips、季節特報與私房景點推薦。
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+                <a href="https://line.me" target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 px-6 py-3.5 rounded-full text-sm font-bold transition-all hover:brightness-110"
+                  style={{ background: "#06C755", color: "#fff" }}>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+                    <path d="M9 1.5C4.86 1.5 1.5 4.44 1.5 8.06c0 2.13 1.14 4.02 2.9 5.25L3.75 16.5l3.13-1.64A7.58 7.58 0 009 15c4.14 0 7.5-3.07 7.5-6.56C16.5 4.87 13.14 1.5 9 1.5z"/>
+                  </svg>
+                  加入LINE
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 px-6 py-3.5 rounded-full text-sm font-bold transition-all hover:brightness-110"
+                  style={{ background: "#1877F2", color: "#fff" }}>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+                    <path d="M9 1.5a7.5 7.5 0 100 15A7.5 7.5 0 009 1.5zm1 8h1.5l.25-2H10V6.5c0-.55.15-1 1-1h.75V3.5A8.3 8.3 0 0010.5 3.4C9 3.4 8 4.3 8 6v1.5H6.5v2H8V16h2V9.5z"/>
+                  </svg>
+                  追蹤Facebook
+                </a>
+              </div>
+            </div>
+          </AnimateOnView>
+        </div>
+      </section>
+
+      {/* ═══ 第3層: 旬情報 Bento UI ═══ */}
+      <section className="py-20" style={{ background: "#F4F8F9" }}>
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimateOnView from="bottom">
+            <div className="mb-10">
+              <p className="section-eyebrow mb-2">FEATURED</p>
+              <h2 className="section-heading">旬情報<em>特輯</em></h2>
+              <p className="text-slate-500 text-sm mt-2">季節、美食、體驗——沖繩現在最值得關注的精選主題</p>
+            </div>
+          </AnimateOnView>
+
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+            {bentoItems.map((item, i) => (
+              <AnimateOnView key={item.id} delay={i * 80} from="bottom"
+                className={item.wide ? "md:col-span-2" : "md:col-span-1"}>
+                <Link href={item.href}
+                  className="block rounded-2xl p-7 h-full flex flex-col justify-between min-h-[180px] transition-all hover:brightness-105 hover:-translate-y-0.5"
+                  style={item.style}>
                   <div>
-                    <div className="font-bold text-slate-800 text-base mb-1.5">{title}</div>
-                    <div className="text-sm text-slate-600 leading-relaxed">{desc}</div>
+                    <span className="text-xs font-bold px-2.5 py-1 rounded-full mb-3 inline-block"
+                      style={{ background: "rgba(255,255,255,0.22)", color: "#fff" }}>
+                      {item.tag}
+                    </span>
+                    <div className="text-3xl mb-2">{item.emoji}</div>
+                    <h3 className="text-white font-black text-lg mb-1">{item.title}</h3>
+                    <p className="text-white/85 text-sm leading-relaxed">{item.desc}</p>
                   </div>
-                  <div className="w-8 h-0.5 rounded-full transition-all duration-300 group-hover:w-14"
-                    style={{ background: "#00A896" }} />
+                </Link>
+              </AnimateOnView>
+            ))}
+          </div>
+
+          {/* 最新記事 */}
+          {posts.length > 0 && (
+            <>
+              <h3 className="font-bold text-slate-700 text-base mb-5">最新文章</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {posts.slice(0, 3).map((post, i) => (
+                  <AnimateOnView key={post.slug} delay={i * 90} from="bottom">
+                    <PostCard post={post} />
+                  </AnimateOnView>
+                ))}
+              </div>
+              {posts.length > 3 && (
+                <div className="text-center mt-8">
+                  <Link href="/category/sightseeing"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold transition-all hover:brightness-110"
+                    style={{ background: "#00A896", color: "#fff" }}>
+                    查看所有文章 <IconArrow size={14} color="#fff" />
+                  </Link>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </section>
+
+      {/* ═══ 第4層: エリア・体験検索 ═══ */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimateOnView from="bottom">
+            <div className="mb-10">
+              <p className="section-eyebrow mb-2">EXPLORE</p>
+              <h2 className="section-heading">探索<em>沖繩</em></h2>
+              <p className="text-slate-500 text-sm mt-2">依地區或體驗主題，找到屬於你的沖繩旅行</p>
+            </div>
+          </AnimateOnView>
+
+          {/* エリアカード */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            {areas.map((area, i) => (
+              <AnimateOnView key={area.name} delay={i * 70} from="bottom">
+                <Link href="/category/sightseeing"
+                  className="block p-5 rounded-2xl text-center transition-all hover:-translate-y-1 hover:shadow-lg"
+                  style={{ border: "1.5px solid #E2EDF0", background: "#FAFFFE" }}>
+                  <div className="text-3xl mb-2">{area.emoji}</div>
+                  <div className="font-bold text-slate-800 text-sm mb-1">{area.name}</div>
+                  <div className="text-xs text-slate-500 leading-relaxed">{area.desc}</div>
+                </Link>
+              </AnimateOnView>
+            ))}
+          </div>
+
+          {/* 体験テーマ */}
+          <AnimateOnView from="bottom">
+            <h3 className="font-bold text-slate-700 text-sm mb-4">依體驗主題搜尋</h3>
+            <div className="flex flex-wrap gap-2.5">
+              {themes.map((theme) => (
+                <Link key={theme.label} href="/category/sightseeing"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105"
+                  style={{ background: "#F0F9F8", color: "#00796B", border: "1px solid #B2DFDB" }}>
+                  <span>{theme.emoji}</span>
+                  {theme.label}
+                </Link>
+              ))}
+            </div>
+          </AnimateOnView>
+        </div>
+      </section>
+
+      {/* ═══ 第5層: UGCエリア ═══ */}
+      <section className="py-20" style={{ background: "#F4F8F9" }}>
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimateOnView from="bottom">
+            <div className="mb-10">
+              <p className="section-eyebrow mb-2">COMMUNITY</p>
+              <h2 className="section-heading">旅人<em>推薦</em></h2>
+              <p className="text-slate-500 text-sm mt-2">來自台灣旅客的真實體驗與影片分享</p>
+            </div>
+          </AnimateOnView>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {youtubeVideos.map((v, i) => (
+              <AnimateOnView key={v.title} delay={i * 100} from="bottom">
+                <div className="rounded-2xl overflow-hidden bg-white"
+                  style={{ border: "1px solid #EEF2F5", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
+                  <div className="w-full aspect-video flex items-center justify-center"
+                    style={{ background: "linear-gradient(135deg,#1A1A2E,#16213E)" }}>
+                    <div className="text-center">
+                      <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3"
+                        style={{ background: "#FF0000" }}>
+                        <svg width="22" height="22" viewBox="0 0 22 22" fill="white">
+                          <path d="M8 6l9 5-9 5V6z"/>
+                        </svg>
+                      </div>
+                      <p className="text-xs text-white/50">請設定YouTube網址</p>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <p className="text-xs font-bold mb-1" style={{ color: "#00A896" }}>{v.channel}</p>
+                    <p className="font-semibold text-slate-800 text-sm">{v.title}</p>
+                  </div>
                 </div>
               </AnimateOnView>
             ))}
           </div>
+
+          <AnimateOnView from="bottom">
+            <div className="p-6 rounded-2xl text-center"
+              style={{ background: "#fff", border: "1.5px solid #E0F7F4" }}>
+              <p className="text-slate-600 text-sm mb-4">
+                在Instagram分享你的沖繩回憶，使用標籤&nbsp;
+                <strong style={{ color: "#00A896" }}>#妙遊沖繩</strong>
+              </p>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all hover:brightness-110"
+                style={{ background: "linear-gradient(135deg,#F58529,#DD2A7B,#8134AF)", color: "#fff" }}>
+                前往Instagram
+              </a>
+            </div>
+          </AnimateOnView>
         </div>
       </section>
 
-      {/* ═══════════════════════ CATEGORIES ═══════════════════════ */}
-      <section className="py-24" style={{ background: "#F4F8F9" }}>
+      {/* ═══ 第6層: 実用ガイド ═══ */}
+      <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnView from="bottom">
-            <div className="mb-12">
-              <p className="section-eyebrow mb-2">EXPLORE</p>
-              <h2 className="section-heading">旅遊<em>分類</em></h2>
-              <p className="text-slate-500 mt-3 text-sm max-w-md">
-                從海灘到美食，從交通到購物，找到屬於你的沖繩旅行主題
-              </p>
+            <div className="mb-10">
+              <p className="section-eyebrow mb-2">TRAVEL GUIDE</p>
+              <h2 className="section-heading">實用<em>指南</em></h2>
+              <p className="text-slate-500 text-sm mt-2">台灣人赴沖繩必知的旅行實用知識</p>
             </div>
           </AnimateOnView>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {categories.map(({ slug, Icon, label, desc, img, imgClass, span }, i) => (
-              <AnimateOnView key={slug} delay={i * 70} from="bottom"
-                className={span ? "md:row-span-2" : ""}>
-                <Link href={`/category/${slug}`}
-                  className={`cat-card relative overflow-hidden rounded-2xl block h-full ${span ? "min-h-[400px]" : "min-h-[180px]"}`}>
-                  {img ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={img} alt={label} className="cat-card-img absolute inset-0 w-full h-full object-cover" />
-                  ) : (
-                    <div className={`cat-card-img absolute inset-0 ${imgClass}`} />
-                  )}
-                  <div className="absolute inset-0"
-                    style={{ background: "linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.25) 50%,rgba(0,0,0,0.04) 100%)" }} />
-                  <div className="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between gap-3">
-                    <div>
-                      <div className="mb-2 opacity-80">
-                        <Icon size={18} color="rgba(255,255,255,0.9)" />
-                      </div>
-                      <div className="text-white font-bold text-base leading-tight"
-                        style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>{label}</div>
-                      <div className="text-white/85 text-xs mt-0.5"
-                        style={{ textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>{desc}</div>
-                    </div>
-                    <div className="cat-card-arrow w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{ background: "rgba(0,168,150,0.9)" }}>
-                      <IconArrow size={15} color="#fff" />
-                    </div>
-                  </div>
-                </Link>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            {guides.map((g, i) => (
+              <AnimateOnView key={g.title} delay={i * 80} from="bottom">
+                <div className="p-6 rounded-2xl h-full"
+                  style={{ background: "#F4F8F9", border: "1px solid #E0EDF0" }}>
+                  <div className="text-2xl mb-3">{g.emoji}</div>
+                  <h3 className="font-bold text-slate-800 text-base mb-3">{g.title}</h3>
+                  <ul className="space-y-2">
+                    {g.items.map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-sm text-slate-600 leading-relaxed">
+                        <span className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: "#00A896" }} />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </AnimateOnView>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* ═══════════════════════ ARTICLES ═══════════════════════ */}
-      {posts.length > 0 && (
-        <section className="py-24 bg-white">
-          <div className="max-w-6xl mx-auto px-6">
-            <AnimateOnView from="bottom">
-              <div className="mb-12">
-                <p className="section-eyebrow mb-2">LATEST</p>
-                <h2 className="section-heading">最新<em>文章</em></h2>
-              </div>
-            </AnimateOnView>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-              {posts.map((post, i) => (
-                <AnimateOnView key={post.slug} delay={i * 110} from="bottom">
-                  <PostCard post={post} />
-                </AnimateOnView>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ═══════════════════════ WHY OKINAWA ═══════════════════════ */}
-      <section className="py-24" style={{ background: "#F4F8F9" }}>
-        <div className="max-w-6xl mx-auto px-6">
-          {/* className="contents" を廃止。代わりに親ごとアニメート */}
           <AnimateOnView from="bottom">
-            <div className="rounded-3xl overflow-hidden grid md:grid-cols-2 shadow-xl">
-              {/* 左：画像 */}
-              <div className="relative min-h-72 md:min-h-0">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/why-okinawa.jpg" alt="沖繩風景"
-                  className="absolute inset-0 w-full h-full object-cover" />
-              </div>
-
-              {/* 右：テキスト */}
-              <div className="p-10 md:p-14 flex flex-col justify-center"
-                style={{ background: "#0D2B3E" }}>
-                <p className="section-eyebrow mb-3" style={{ color: "#64D8CB" }}>WHY OKINAWA?</p>
-                <h3 className="text-3xl md:text-4xl font-black text-white mb-7 leading-tight">
-                  為什麼台灣人<br />要去沖繩？
-                </h3>
-                <ul className="space-y-4 mb-9">
-                  {whyOkinawa.map(({ Icon, text }) => (
-                    <li key={text} className="flex items-start gap-3.5">
-                      <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
-                        style={{ background: "rgba(100,216,203,0.2)" }}>
-                        <Icon size={16} color="#64D8CB" />
-                      </div>
-                      <span className="text-white/90 text-sm leading-relaxed pt-1">{text}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/why-okinawa"
-                  className="self-start inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold transition-all duration-200 hover:brightness-110"
-                  style={{ background: "#00A896", color: "#fff" }}>
-                  了解更多 <IconArrow size={14} color="#fff" />
-                </Link>
-              </div>
-            </div>
+            <PackingSimulator />
           </AnimateOnView>
         </div>
       </section>
-
-      {/* ═══════════════════════ CTA STRIP ═══════════════════════ */}
-      <AnimateOnView from="fade">
-        <section className="py-24 relative overflow-hidden"
-          style={{ background: "linear-gradient(135deg,#004D40 0%,#00796B 40%,#00A896 100%)" }}>
-          <div className="absolute inset-0 opacity-[0.05]"
-            style={{ backgroundImage: "radial-gradient(circle,white 1.5px,transparent 1.5px)", backgroundSize: "36px 36px" }} />
-          <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
-            <p className="section-eyebrow mb-4" style={{ color: "#A7F3E8" }}>PLAN YOUR TRIP</p>
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-5 leading-tight">
-              準備好前往沖繩了嗎？
-            </h2>
-            <p className="text-white/70 text-base leading-relaxed mb-10">
-              從出發前的交通準備，到抵達後的景點規劃，我們提供最完整的沖繩旅遊資訊。
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link href="/category/sightseeing"
-                className="px-8 py-4 rounded-full text-sm font-bold shadow-lg transition-all duration-200 hover:scale-105"
-                style={{ background: "#fff", color: "#00796B" }}>
-                探索景點
-              </Link>
-              <Link href="/category/transport"
-                className="px-8 py-4 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-white/15"
-                style={{ border: "1.5px solid rgba(255,255,255,0.45)", color: "#fff", background: "rgba(255,255,255,0.08)" }}>
-                交通攻略
-              </Link>
-            </div>
-          </div>
-        </section>
-      </AnimateOnView>
     </>
   );
 }

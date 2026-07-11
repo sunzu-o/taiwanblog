@@ -79,11 +79,24 @@ export default function Footer() {
         <div className="mt-14 pt-6 flex flex-col md:flex-row items-center justify-between gap-3"
           style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
           <p className="text-xs" style={{ color: "#1E3340" }}>
-            © {new Date().getFullYear()} 沖繩旅遊指南　資訊僅供參考，請以官方公告為準
+            © {new Date().getFullYear()} 妙遊沖繩　資訊僅供參考，請以官方公告為準
           </p>
-          <p className="text-xs" style={{ color: "#1E3340" }}>
-            內容由 AI 輔助生成並經人工審核
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-xs" style={{ color: "#1E3340" }}>內容由 AI 輔助生成並經人工審核</p>
+            {/* チャットボット（将来の外部サービス埋め込み用プレースホルダー） */}
+            <a href="mailto:cosmos_rockin@yahoo.co.jp"
+              className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
+              style={{ background: "rgba(0,168,150,0.15)", border: "1px solid rgba(0,168,150,0.3)" }}
+              title="聯絡我們">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 1.5C4.41 1.5 1.5 4.03 1.5 7.15c0 1.73.86 3.27 2.2 4.33L3.25 14l2.63-1.38c.67.19 1.37.28 2.12.28 3.59 0 6.5-2.53 6.5-5.65S11.59 1.5 8 1.5z"
+                  stroke="#64D8CB" strokeWidth="1.2" fill="none"/>
+                <circle cx="5.5" cy="7.5" r="0.75" fill="#64D8CB"/>
+                <circle cx="8" cy="7.5" r="0.75" fill="#64D8CB"/>
+                <circle cx="10.5" cy="7.5" r="0.75" fill="#64D8CB"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </footer>

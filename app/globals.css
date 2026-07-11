@@ -138,3 +138,20 @@ body {
 .img-night   { background: linear-gradient(145deg,#1A237E 0%,#283593 55%,#3F51B5 100%); }
 .img-sunset  { background: linear-gradient(145deg,#BF360C 0%,#E64A19 50%,#FF7043 100%); }
 .img-city    { background: linear-gradient(145deg,#006064 0%,#00838F 55%,#00ACC1 100%); }
+
+/* ── ピンクアクセント ── */
+:root {
+  --pink:      #FF6B8A;
+  --pink-pale: #FFF0F3;
+}
+
+/* ── 告知バナー（マーキー） ── */
+.marquee-track {
+  display: inline-flex;
+  animation: marquee-scroll 30s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
