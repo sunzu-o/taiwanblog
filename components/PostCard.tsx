@@ -16,43 +16,38 @@ export default function PostCard({ post }: { post: PostMeta }) {
   return (
     <Link href={`/${post.slug}`} className="block group h-full">
       <article className="bg-white rounded-2xl overflow-hidden h-full flex flex-col card-lift"
-        style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.07)" }}>
+        style={{ boxShadow: "0 2px 20px rgba(0,0,0,0.08)", border: "1px solid #EEF2F5" }}>
 
         {/* サムネイル */}
-        <div className={`relative h-52 overflow-hidden ${post.image ? "" : c.imgClass}`}>
+        <div className={`relative h-48 overflow-hidden ${post.image ? "" : c.imgClass}`}>
           {post.image && (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={post.image} alt={post.title}
               className="absolute inset-0 w-full h-full object-cover" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
         </div>
 
         {/* テキスト */}
-        <div className="p-5 flex flex-col flex-1">
+        <div className="p-6 flex flex-col flex-1">
           {/* カテゴリ・日付 */}
           <div className="flex items-center gap-2 mb-3">
-            <span
-              className="w-2 h-2 rounded-full flex-shrink-0"
-              style={{ background: c.dot }}
-            />
-            <span className="text-xs font-bold tracking-wide uppercase"
-              style={{ color: c.dot }}>
+            <span className="text-xs font-bold px-2.5 py-1 rounded-full"
+              style={{ background: `${c.dot}18`, color: c.dot }}>
               {c.label}
             </span>
-            <span className="text-xs text-slate-300 mx-0.5">·</span>
             <span className="text-xs text-slate-400">{post.date}</span>
           </div>
 
           {/* タイトル */}
-          <h2 className="font-bold text-slate-900 text-[1.05rem] leading-snug mb-2.5 line-clamp-2
+          <h2 className="font-extrabold text-slate-900 text-base leading-tight mb-3 line-clamp-2
             group-hover:text-[#00796B] transition-colors duration-200">
             {post.title}
           </h2>
 
           {/* 概要 */}
-          <p className="text-sm text-slate-500 leading-relaxed flex-1 line-clamp-3">
+          <p className="text-sm text-slate-600 leading-[1.75] flex-1 line-clamp-3">
             {post.excerpt}
           </p>
 

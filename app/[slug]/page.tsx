@@ -59,15 +59,16 @@ export default async function PostPage({ params }: Props) {
       {/* ヘッダー */}
       <header className="mb-8">
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-medium px-3 py-1 rounded-full bg-blue-100 text-blue-700">
+          <span className="text-xs font-bold px-3 py-1 rounded-full"
+            style={{ background: "#E0F7F4", color: "#00796B" }}>
             {categoryLabels[post.category] ?? post.category}
           </span>
           <span className="text-sm text-slate-400">{post.date}</span>
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 leading-snug mb-4">
+        <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight mb-4">
           {post.title}
         </h1>
-        <p className="text-slate-500 text-base leading-relaxed border-l-4 border-[#00B4D8] pl-4 bg-blue-50 py-2 pr-4 rounded-r-lg">
+        <p className="text-slate-600 text-base leading-[1.8] border-l-4 border-[#00A896] pl-4 bg-[#F0FDFB] py-3 pr-4 rounded-r-lg">
           {post.excerpt}
         </p>
       </header>

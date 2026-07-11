@@ -102,7 +102,7 @@ body {
   font-size: 2rem;
   font-weight: 800;
   color: var(--ink);
-  line-height: 1.2;
+  line-height: 1.15;
   letter-spacing: -0.02em;
 }
 .section-heading em {

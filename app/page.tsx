@@ -97,7 +97,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <div className="font-bold text-slate-800 text-base mb-1.5">{title}</div>
-                    <div className="text-sm text-slate-500 leading-relaxed">{desc}</div>
+                    <div className="text-sm text-slate-600 leading-relaxed">{desc}</div>
                   </div>
                   <div className="w-8 h-0.5 rounded-full transition-all duration-300 group-hover:w-14"
                     style={{ background: "#00A896" }} />
@@ -140,8 +140,10 @@ export default function HomePage() {
                       <div className="mb-2 opacity-80">
                         <Icon size={18} color="rgba(255,255,255,0.9)" />
                       </div>
-                      <div className="text-white font-bold text-base leading-tight">{label}</div>
-                      <div className="text-white/60 text-xs mt-0.5">{desc}</div>
+                      <div className="text-white font-bold text-base leading-tight"
+                        style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>{label}</div>
+                      <div className="text-white/85 text-xs mt-0.5"
+                        style={{ textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>{desc}</div>
                     </div>
                     <div className="cat-card-arrow w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
                       style={{ background: "rgba(0,168,150,0.9)" }}>
@@ -200,10 +202,10 @@ export default function HomePage() {
                   {whyOkinawa.map(({ Icon, text }) => (
                     <li key={text} className="flex items-start gap-3.5">
                       <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
-                        style={{ background: "rgba(0,168,150,0.18)" }}>
+                        style={{ background: "rgba(100,216,203,0.2)" }}>
                         <Icon size={16} color="#64D8CB" />
                       </div>
-                      <span className="text-white/75 text-sm leading-relaxed pt-1">{text}</span>
+                      <span className="text-white/90 text-sm leading-relaxed pt-1">{text}</span>
                     </li>
                   ))}
                 </ul>

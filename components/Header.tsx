@@ -40,14 +40,14 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-2.5 group">
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center text-base font-bold text-white flex-shrink-0"
-              style={{ background: "linear-gradient(135deg, #0077B6, #00B4D8)" }}
+              style={{ background: "linear-gradient(135deg, #00796B, #00A896)" }}
             >
-              沖
+              妙
             </div>
             <div>
               <div
                 className="font-bold text-base leading-tight transition-colors"
-                style={{ color: isTransparent ? "#fff" : "#023E8A" }}
+                style={{ color: isTransparent ? "#fff" : "#00796B" }}
               >
                 妙遊沖繩
               </div>
@@ -71,10 +71,10 @@ export default function Header() {
                   color: isTransparent ? "rgba(255,255,255,0.9)" : "#475569",
                 }}
                 onMouseEnter={(e) => {
-                  (e.target as HTMLElement).style.color = isTransparent ? "#fff" : "#0077B6";
+                  (e.target as HTMLElement).style.color = isTransparent ? "#fff" : "#00796B";
                   (e.target as HTMLElement).style.background = isTransparent
                     ? "rgba(255,255,255,0.15)"
-                    : "#EFF6FF";
+                    : "#E0F7F4";
                 }}
                 onMouseLeave={(e) => {
                   (e.target as HTMLElement).style.color = isTransparent
