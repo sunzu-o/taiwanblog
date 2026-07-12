@@ -4,19 +4,23 @@ import { useState } from "react";
 
 const seasons = {
   spring: {
-    label: "3〜5月（春季）", emoji: "🌸",
+    label: "3〜5月（春季）", emoji: "🌸", temp: "19〜24°C",
+    outfit: "短袖＋薄外套的洋蔥式穿搭，類似台北4月天氣",
     items: ["薄外套（早晚較涼）", "防曬乳 SPF50+", "折疊雨傘", "舒適步行鞋", "台灣健保卡影本"],
   },
   summer: {
-    label: "6〜9月（夏季）", emoji: "☀️",
+    label: "6〜9月（夏季）", emoji: "☀️", temp: "27〜32°C",
+    outfit: "透氣短袖短褲即可，室內冷氣強建議帶件薄襯衫",
     items: ["防曬乳 SPF50+（必備！）", "防蚊液", "涼感衣物", "泳衣、泳鏡", "墨鏡", "寬簷帽", "保冷水壺"],
   },
   autumn: {
-    label: "10〜11月（秋季）", emoji: "🍂",
+    label: "10〜11月（秋季）", emoji: "🍂", temp: "22〜27°C",
+    outfit: "白天短袖、晚上薄長袖，最舒適的旅遊季節",
     items: ["薄外套", "防曬乳 SPF30+", "折疊雨傘", "舒適步行鞋", "台灣健保卡影本"],
   },
   winter: {
-    label: "12〜2月（冬季）", emoji: "🌬️",
+    label: "12〜2月（冬季）", emoji: "🌬️", temp: "14〜19°C",
+    outfit: "長袖＋中等厚度外套，海邊風大建議選防風款",
     items: ["中等厚度外套（約台北冬天）", "圍巾", "保濕護膚品", "舒適步行鞋", "台灣健保卡影本"],
   },
 } as const;
@@ -28,8 +32,8 @@ export default function PackingSimulator() {
 
   return (
     <div className="rounded-2xl p-6 md:p-8" style={{ background: "#F4F8F9", border: "1px solid #E0EDF0" }}>
-      <h3 className="font-bold text-slate-800 text-lg mb-1">🧳 依季節推薦必備物品</h3>
-      <p className="text-sm text-slate-500 mb-5">選擇旅遊季節，查看建議攜帶物品</p>
+      <h3 className="font-bold text-slate-800 text-lg mb-1">🧳 行李・穿搭模擬器</h3>
+      <p className="text-sm text-slate-500 mb-5">選擇旅遊季節，查看建議穿搭與攜帶物品</p>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
         {(Object.keys(seasons) as Season[]).map((s) => (
           <button key={s}
@@ -47,6 +51,14 @@ export default function PackingSimulator() {
       </div>
       {selected && (
         <div className="rounded-xl p-5" style={{ background: "#fff", border: "1px solid #E0F7F4" }}>
+          {/* 穿搭建議 */}
+          <div className="flex flex-wrap items-center gap-2 mb-4 pb-4" style={{ borderBottom: "1px dashed #E0F7F4" }}>
+            <span className="text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0"
+              style={{ background: "#E0F7F4", color: "#00796B" }}>
+              🌡️ 氣溫 {seasons[selected].temp}
+            </span>
+            <p className="text-sm text-slate-700 font-medium">👕 {seasons[selected].outfit}</p>
+          </div>
           <p className="text-xs font-bold mb-3" style={{ color: "#00A896" }}>
             {seasons[selected].emoji} {seasons[selected].label} 建議攜帶
           </p>

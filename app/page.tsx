@@ -8,6 +8,7 @@ import {
 import PackingSimulator from "@/components/PackingSimulator";
 import OkinawaMap from "@/components/OkinawaMap";
 import PostSearch from "@/components/PostSearch";
+import CouponSection from "@/components/CouponSection";
 
 const announcements = [
   "🌺 沖繩花季：寒緋櫻1月底綻放，比本州早兩個月",
@@ -61,6 +62,8 @@ const themes = [
   { emoji: "🏰", label: "歷史古跡",   href: "/category/sightseeing" },
   { emoji: "🍜", label: "在地美食",   href: "/category/food"        },
   { emoji: "🛍️", label: "免稅購物",  href: "/category/shopping"    },
+  { emoji: "👘", label: "琉裝體驗",   href: "/category/sightseeing" },
+  { emoji: "♨️", label: "溫泉・SPA",  href: "/category/sightseeing" },
   { emoji: "🌅", label: "夕陽景點",   href: "/category/sightseeing" },
   { emoji: "👨‍👩‍👧", label: "親子旅遊", href: "/category/sightseeing" },
   { emoji: "🚗", label: "租車自駕",   href: "/category/transport"   },
@@ -70,7 +73,7 @@ const themes = [
 const guides = [
   {
     emoji: "🚗", title: "租車・駕照",
-    items: ["台灣駕照＋國際駕照可直接使用", "建議在台灣出發前辦理國際駕照", "日本靠左行駛，注意方向"],
+    items: ["台灣駕照＋日文譯本即可租車", "日文譯本可在台灣監理站申辦", "日本靠左行駛，注意方向"],
   },
   {
     emoji: "📞", title: "緊急聯絡",
@@ -82,9 +85,25 @@ const guides = [
   },
 ];
 
+// レンタカー手続き4ステップ（台湾人向け）
+const rentalSteps = [
+  { step: "1", emoji: "📋", title: "台灣申辦駕照日文譯本", desc: "至監理站辦理，當天可取件（約100元）" },
+  { step: "2", emoji: "💻", title: "線上預約租車", desc: "旺季建議提前1個月，選含中文導航車款" },
+  { step: "3", emoji: "🔑", title: "現場取車", desc: "出示台灣駕照＋日文譯本＋護照" },
+  { step: "4", emoji: "🚗", title: "靠左行駛出發", desc: "日本靠左行駛，方向燈與雨刷位置相反" },
+];
+
 const youtubeVideos = [
   { title: "沖繩3天2夜完全攻略｜台灣人必看", channel: "妙遊沖繩" },
   { title: "那霸機場到市區最省錢方法", channel: "妙遊沖繩" },
+];
+
+// SNSタイムライン（編集部発信。KOL提携後に実際の口コミ投稿へ差し替え）
+const snsTimeline = [
+  { time: "1月", emoji: "🌸", text: "寒緋櫻1月底就開了！比日本本州早兩個月，今歸仁城跡是小編最推的賞櫻點。", tags: ["#沖繩櫻花", "#今歸仁城跡"] },
+  { time: "交通", emoji: "🚌", text: "從那霸機場搭東京巴士只要¥240就能直達國際通，約15分鐘，比計程車省超多！", tags: ["#那霸機場", "#交通攻略"] },
+  { time: "親子", emoji: "🐋", text: "美麗海水族館國中生以下免費入館！帶小朋友來沖繩，這裡絕對是首選。", tags: ["#美麗海水族館", "#親子旅遊"] },
+  { time: "離島", emoji: "🏝️", text: "慶良間群島從那霸出發當天就能來回，海水透明度真的名不虛傳。", tags: ["#慶良間", "#浮潛"] },
 ];
 
 export default function HomePage() {
@@ -156,17 +175,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 第2層: LINE/Facebook 誘導 ═══ */}
-      <section className="bg-white py-14">
+      {/* ═══ 第2層: 実利提供エリア（クーポン＋LINE/Facebook誘導） ═══ */}
+      <section className="bg-white py-16">
         <div className="max-w-6xl mx-auto px-6">
+          <AnimateOnView from="bottom">
+            <div className="mb-8">
+              <p className="section-eyebrow mb-2">MEMBER BENEFITS</p>
+              <h2 className="section-heading">會員<em>專屬優惠</em></h2>
+              <p className="text-slate-500 text-sm mt-2">藥妝、伴手禮、租車——為台灣旅客準備的專屬折扣（實際優惠以店家公告為準）</p>
+            </div>
+          </AnimateOnView>
+
+          {/* クーポン一覧 */}
+          <AnimateOnView from="bottom">
+            <div className="mb-8">
+              <CouponSection />
+            </div>
+          </AnimateOnView>
+
           <AnimateOnView from="bottom">
             <div className="rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-8"
               style={{ background: "linear-gradient(135deg,#0D2B3E 0%,#1A4060 100%)" }}>
               <div className="flex-1">
                 <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "#64D8CB" }}>FOLLOW US</p>
-                <h2 className="text-2xl font-black text-white mb-3">追蹤我們，隨時掌握沖繩最新資訊</h2>
+                <h2 className="text-2xl font-black text-white mb-3">加入會員，優惠券上線搶先領取</h2>
                 <p className="text-white/70 text-sm leading-relaxed">
-                  加入LINE或Facebook，獲取限定旅遊Tips、季節特報與私房景點推薦。
+                  加入LINE或Facebook，第一時間獲取優惠券、限定旅遊Tips、季節特報與私房景點推薦。
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
@@ -329,20 +363,76 @@ export default function HomePage() {
             ))}
           </div>
 
-          <AnimateOnView from="bottom">
-            <div className="p-6 rounded-2xl text-center"
-              style={{ background: "#fff", border: "1.5px solid #E0F7F4" }}>
-              <p className="text-slate-600 text-sm mb-4">
-                在Instagram分享你的沖繩回憶，使用標籤&nbsp;
-                <strong style={{ color: "#00A896" }}>#妙遊沖繩</strong>
-              </p>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all hover:brightness-110"
-                style={{ background: "linear-gradient(135deg,#F58529,#DD2A7B,#8134AF)", color: "#fff" }}>
-                前往Instagram
-              </a>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            {/* SNSタイムライン */}
+            <AnimateOnView from="bottom" className="md:col-span-3">
+              <div className="rounded-2xl p-6 md:p-7 bg-white h-full"
+                style={{ border: "1px solid #EEF2F5" }}>
+                <h3 className="font-bold text-slate-800 text-base mb-5">📱 小編即時分享</h3>
+                <div className="space-y-5">
+                  {snsTimeline.map((post) => (
+                    <div key={post.text} className="flex gap-3.5">
+                      <div className="flex flex-col items-center flex-shrink-0">
+                        <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-black text-white"
+                          style={{ background: "linear-gradient(135deg,#00796B,#00A896)" }}>
+                          妙
+                        </div>
+                        <div className="w-px flex-1 mt-2" style={{ background: "#E2EDF0" }} />
+                      </div>
+                      <div className="pb-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-sm font-bold text-slate-800">妙遊沖繩小編</span>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                            style={{ background: "#F0F9F8", color: "#00796B" }}>
+                            {post.emoji} {post.time}
+                          </span>
+                        </div>
+                        <p className="text-sm text-slate-600 leading-relaxed mb-1.5">{post.text}</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {post.tags.map((tag) => (
+                            <span key={tag} className="text-xs font-semibold" style={{ color: "#00A896" }}>{tag}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </AnimateOnView>
+
+            {/* KOLブログ枠 + Instagram誘導 */}
+            <div className="md:col-span-2 flex flex-col gap-6">
+              <AnimateOnView from="bottom">
+                <div className="rounded-2xl p-6 text-center"
+                  style={{ background: "#fff", border: "1.5px dashed #C9DDE2" }}>
+                  <div className="text-3xl mb-2">✍️</div>
+                  <h3 className="font-bold text-slate-800 text-sm mb-1.5">台灣旅遊達人專欄</h3>
+                  <p className="text-xs text-slate-500 leading-relaxed mb-3">
+                    台灣KOL的沖繩遊記與影片，正在合作洽談中
+                  </p>
+                  <span className="text-[10px] font-bold px-2.5 py-1 rounded-full"
+                    style={{ background: "#FFF4E0", color: "#A16207", border: "1px solid #F3D9A4" }}>
+                    🔜 即將推出
+                  </span>
+                </div>
+              </AnimateOnView>
+
+              <AnimateOnView from="bottom">
+                <div className="p-6 rounded-2xl text-center flex-1"
+                  style={{ background: "#fff", border: "1.5px solid #E0F7F4" }}>
+                  <p className="text-slate-600 text-sm mb-4">
+                    在Instagram分享你的沖繩回憶，使用標籤&nbsp;
+                    <strong style={{ color: "#00A896" }}>#妙遊沖繩</strong>
+                  </p>
+                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all hover:brightness-110"
+                    style={{ background: "linear-gradient(135deg,#F58529,#DD2A7B,#8134AF)", color: "#fff" }}>
+                    前往Instagram
+                  </a>
+                </div>
+              </AnimateOnView>
             </div>
-          </AnimateOnView>
+          </div>
         </div>
       </section>
 
@@ -376,6 +466,37 @@ export default function HomePage() {
               </AnimateOnView>
             ))}
           </div>
+
+          {/* レンタカー手続き4ステップ */}
+          <AnimateOnView from="bottom">
+            <div className="rounded-2xl p-6 md:p-8 mb-10"
+              style={{ background: "linear-gradient(135deg,#0D2B3E 0%,#14384F 100%)" }}>
+              <h3 className="font-bold text-white text-lg mb-1">🚗 台灣人租車自駕 4步驟</h3>
+              <p className="text-sm mb-6" style={{ color: "#8AA8B5" }}>
+                不需要國際駕照！只要台灣駕照＋日文譯本就能在沖繩租車
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {rentalSteps.map((s, i) => (
+                  <div key={s.step} className="relative rounded-xl p-5"
+                    style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                    <div className="flex items-center gap-2.5 mb-2.5">
+                      <span className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
+                        style={{ background: "#00A896", color: "#fff" }}>
+                        {s.step}
+                      </span>
+                      <span className="text-2xl">{s.emoji}</span>
+                    </div>
+                    <h4 className="font-bold text-white text-sm mb-1.5 leading-snug">{s.title}</h4>
+                    <p className="text-xs leading-relaxed" style={{ color: "#8AA8B5" }}>{s.desc}</p>
+                    {i < rentalSteps.length - 1 && (
+                      <span className="hidden lg:block absolute top-1/2 -right-3 -translate-y-1/2 text-sm"
+                        style={{ color: "#3E5A68" }}>→</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimateOnView>
 
           <AnimateOnView from="bottom">
             <PackingSimulator />
